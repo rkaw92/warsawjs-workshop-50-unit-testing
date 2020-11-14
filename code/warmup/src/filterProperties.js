@@ -1,9 +1,10 @@
 module.exports.filterProperties = function filterProperties(input, keys) {
     const keysToKeep = new Set(keys);
-    Object.keys(input).forEach(function(key) {
+    const output = Object.assign({}, input);
+    Object.keys(output).forEach(function(key) {
         if (!keysToKeep.has(key)) {
-            delete input[key];
+            delete output[key];
         }
     });
-    return input;
+    return output;
 };
