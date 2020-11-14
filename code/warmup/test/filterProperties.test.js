@@ -12,4 +12,9 @@ describe('filterProperties', function() {
         const output = filterProperties(input, [ 'a', 'c' ]);
         assert.deepEqual(output, { a: 1, c: undefined });
     });
+    it('should not modify the input', function() {
+        const input = { a: 1, b: 2, c: undefined };
+        const output = filterProperties(input, [ 'a', 'c' ]);
+        assert.deepEqual(input, { a: 1, b: 2, c: undefined });
+    });
 });
