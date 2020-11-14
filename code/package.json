@@ -1,0 +1,16 @@
+{
+  "name": "@rkaw92/warsawjs-workshop-50-unit-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "sinon": "^9.2.1"
+  }
+}
