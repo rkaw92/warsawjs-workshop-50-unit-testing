@@ -37,8 +37,6 @@ describe('Auction', function() {
         //  the one better offer which was made later.
         const winners = await sale.end();
         assert.strictEqual(winners.length, 5);
-        console.log('initial:', initialOffers);
-        console.log('winners:', winners);
         for (let offer of initialOffers.slice(0, -1)) {
             assert.ok(winners.includes(offer));
         }
