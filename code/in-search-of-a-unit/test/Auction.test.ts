@@ -5,6 +5,7 @@ import * as uuid from 'uuid';
 import { Offer } from "../src/Offer";
 import * as assert from "assert";
 import * as sinon from "sinon";
+import { mockObject } from "./Mock";
 
 function testOffer(amount: number, currency = 'PLN', user?: string): Offer {
     return {
@@ -58,18 +59,25 @@ describe('Auction', function() {
     it('should select the winners after some offers are replaced', async function() {
         // TODO: Rewrite this test to use behavior verification as well!
         const notifier = new EmailNotifier();
+        const mockNotifier = mockObject(notifier);
         const sale = new Auction('PLN', 5, notifier);
         const initialOffers = stuffAuction(sale, 5);
         const lastOffer = sale.getQualifyingOffers().pop()!;
         const betterOffer = testOffer(15);
+        mockNotifier.method('notifyUser', notifier.notifyUser).expect([ lastOffer.madeByUserID, {
+            eventType: 'outbid',
+            offer: lastOffer
+        } ], Promise.resolve());
         await sale.makeOffer(betterOffer);
-        const winners = await sale.end();
-        // Make sure the winners are: 4/5 of the initial offers and
-        //  the one better offer which was made later.
-        assert.strictEqual(winners.length, 5);
-        for (let offer of initialOffers.slice(0, -1)) {
-            assert.ok(winners.includes(offer));
+        // Make sure all the proper winners are notified:
+        for (let offer of [ betterOffer, ...initialOffers.slice(0, -1) ]) {
+            mockNotifier.method('notifyUser', notifier.notifyUser).expect([ offer.madeByUserID, {
+                eventType: 'win',
+                auction: sale,
+                offer: offer
+            } ], Promise.resolve());
         }
-        assert.ok(winners.includes(betterOffer));
+        await sale.end();
+        mockNotifier.verify();
     });
 });
