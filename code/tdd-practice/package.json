@@ -1,0 +1,32 @@
+{
+  "name": "@rkaw92/warsawjs-workshop-50-tdd-practice",
+  "version": "0.1.0",
+  "description": "Test-Driven Development practice repo",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register --reporter tap test/*.test.ts"
+  },
+  "keywords": [
+    "test-driven",
+    "development",
+    "TDD",
+    "workshop",
+    "WarsawJS"
+  ],
+  "author": "Robert Kawecki <robert+public@rkaw.pl>",
+  "license": "MIT",
+  "dependencies": {
+    "big.js": "^6.0.2",
+    "mocha": "^8.2.1"
+  },
+  "devDependencies": {
+    "@types/big.js": "^6.0.0",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^14.14.8",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  }
+}
